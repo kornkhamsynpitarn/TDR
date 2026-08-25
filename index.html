@@ -893,8 +893,8 @@ function fmtMoney(s){
 
 /* ================= Reusable print-template pieces ================= */
 function ppHeader(data, titleTh, titleMm) {
-  const catTh = data.caseCategory === 'talktous' ? 'Talk To Us' : 'Normal';
   const lh = BRANCH_LETTERHEAD[data.branchValue] || {name:'', address:''};
+  const branchLabel = (BRANCHES.find(b => b.value === data.branchValue) || {}).en || '';
   return `
   <div class="pp-letterhead">
     <img src="${LOGO_DATAURI}" width="46" height="46">
@@ -909,7 +909,7 @@ function ppHeader(data, titleTh, titleMm) {
       <div class="pp-title-mm">${titleMm}</div>
     </div>
     <div class="pp-header-right">
-      <div class="cat">${catTh}</div>
+      <div class="cat">${escapeHtml(branchLabel)}</div>
     </div>
   </div>`;
 }
@@ -1499,6 +1499,7 @@ function buildTdrPages(data, sched) {
 
   const scheduleInners = chunks.map((chunk, idx) => {
     let rowsHtml = chunk.map(r => `<tr><td>${fmtDate(r.date)}</td><td>${fmtNum(r.installment)}</td><td>${fmtNum(r.feePaid)}</td><td>${fmtNum(r.interestPaid)}</td><td>${fmtNum(r.principalPaid)}</td><td>${fmtNum(r.remainingBalance)}</td></tr>`).join('');
+    const isLastChunk = idx === chunks.length - 1;
     return `
       <div class="pp-sched-title">ตารางรายละเอียดการผ่อนชำระเงินกู้ <span style="font-family:'Noto Sans Myanmar',sans-serif; font-weight:500; font-size:12px; color:#666; line-height:1.7;">ချေးငွေအရစ်ကျပေးချေခြင်းဇယား</span></div>
       <div class="pp-sched-meta">
@@ -1517,12 +1518,11 @@ function buildTdrPages(data, sched) {
         ${rowsHtml}
       </table>
       ${chunks.length > 1 ? `<div class="pp-sched-footer">Schedule ${idx+1}/${chunks.length}</div>` : ''}
+      ${isLastChunk ? `${ppSingleClause(TDR_PAYMENT_CLAUSE)}${ppQr()}` : ''}
     `;
   });
 
   const trailingInner = `
-    ${ppSingleClause(TDR_PAYMENT_CLAUSE)}
-    ${ppQr()}
     ${ppSingleClause(TDR_DEFAULT_CLAUSE)}
     ${ppBorrowerSignature()}
     ${ppApprovalChain()}
