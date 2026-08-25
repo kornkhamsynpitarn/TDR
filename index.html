@@ -186,50 +186,53 @@ table.sched tr:last-child td{font-weight:700; background:#FAFAFD;}
 .print-page{
   width:794px; min-height:1123px; background:#fff; padding:42px 50px;
   font-family:'Noto Sans Thai','Noto Sans Myanmar',sans-serif; color:#151515;
-  box-sizing:border-box; position:relative;
+  box-sizing:border-box; position:relative; letter-spacing:normal; word-spacing:normal;
+  text-align:left;
 }
+.print-page *{letter-spacing:normal; word-spacing:normal;}
 .pp-letterhead{display:flex; align-items:center; gap:12px; padding-bottom:10px; margin-bottom:8px;}
 .pp-letterhead img{height:46px; width:auto; flex:none;}
-.pp-letterhead-name{font-size:13.5px; font-weight:700; color:#151515;}
-.pp-letterhead-address{font-size:10px; color:#555; margin-top:2px; line-height:1.4;}
+.pp-letterhead-name{font-size:15px; font-weight:700; color:#2E3192;}
+.pp-letterhead-address{font-size:11.5px; color:#555; margin-top:3px; line-height:1.5;}
 .pp-header{display:flex; align-items:flex-start; gap:14px; border-bottom:2.5px solid #2E3192; padding-bottom:10px; margin-bottom:14px;}
 .pp-header img{height:44px; width:auto;}
 .pp-title-th{font-size:15px; font-weight:700; color:#2E3192; line-height:1.35;}
-.pp-title-mm{font-size:12px; color:#444; font-family:'Noto Sans Myanmar',sans-serif; margin-top:2px; line-height:1.7;}
-.pp-header-right{margin-left:auto; text-align:right; font-size:11px;}
+.pp-title-mm{font-size:13px; color:#444; font-family:'Noto Sans Myanmar',sans-serif; margin-top:3px; line-height:1.7;}
+.pp-header-right{margin-left:auto; text-align:right; font-size:12.5px;}
 .pp-header-right .cat{margin-top:4px; font-weight:600; color:#2E3192;}
 .pp-field-row{display:flex; gap:20px; margin-bottom:7px;}
 .pp-field{flex:1; min-width:0;}
 .pp-field-2{flex:2;}
-.pp-label-th{font-size:11px; font-weight:700;}
-.pp-label-mm{font-size:9.5px; color:#555; font-family:'Noto Sans Myanmar',sans-serif; margin-bottom:3px; line-height:1.7;}
-.pp-value{border-bottom:1px dotted #999; min-height:15px; padding:2px 3px; font-weight:600; font-size:12px; word-break:break-word;}
-.pp-section-title{font-size:12.5px; font-weight:700; color:#2E3192; margin:14px 0 7px; border-bottom:1px solid #d6d6e6; padding-bottom:3px;}
-.pp-section-title .mm{font-size:10.5px; color:#666; font-weight:500; font-family:'Noto Sans Myanmar',sans-serif; display:block; line-height:1.7; padding-top:2px;}
-.pp-reason-row{display:flex; flex-wrap:wrap; gap:5px 16px; font-size:10.5px; margin-bottom:3px; line-height:1.7;}
+.pp-label-th{font-size:12.5px; font-weight:700;}
+.pp-label-mm{font-size:11px; color:#555; font-family:'Noto Sans Myanmar',sans-serif; margin-bottom:3px; line-height:1.7;}
+.pp-value{border-bottom:1px dotted #999; min-height:18px; padding:3px 3px; font-weight:600; font-size:14px; overflow-wrap:anywhere; word-break:normal;}
+.pp-section-title{font-size:14px; font-weight:700; color:#2E3192; margin:16px 0 8px; border-bottom:1px solid #d6d6e6; padding-bottom:4px;}
+.pp-section-title .mm{font-size:12px; color:#666; font-weight:500; font-family:'Noto Sans Myanmar',sans-serif; display:block; line-height:1.7; padding-top:2px;}
+.pp-reason-row{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12px; margin-bottom:4px; line-height:1.7;}
 .pp-reason-item{display:flex; align-items:center; gap:4px; white-space:nowrap; line-height:1.7;}
-.pp-checkbox{width:10px;height:10px;border:1.3px solid #333; display:inline-flex; align-items:center; justify-content:center; font-size:8px; font-weight:700; flex:none;}
+.pp-checkbox{width:12px;height:12px;border:1.5px solid #333; display:inline-flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:700; flex:none;}
 .pp-checkbox.on{background:#2E3192; color:#fff; border-color:#2E3192;}
-.pp-clause{font-size:10.3px; margin-bottom:8px; line-height:1.5;}
+.pp-clause{font-size:11.8px; margin-bottom:9px; line-height:1.55;}
 .pp-clause .th{font-weight:600;}
 .pp-clause .mm{color:#444; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7; margin-top:2px;}
-.pp-sig-wrap{margin-top:22px; font-size:11px; display:flex; justify-content:space-between;}
+.pp-sig-wrap{margin-top:26px; font-size:12.5px; display:flex; justify-content:space-between;}
 .pp-sig-block{width:46%;}
-.pp-sig-line{border-bottom:1px solid #333; display:block; height:26px;}
-.pp-sig-cap{font-size:9.5px; color:#555; margin-top:5px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
-.pp-approval-table{width:100%; border-collapse:collapse; margin-top:14px; font-size:10px;}
+.pp-sig-line{border-bottom:1px solid #333; display:block; height:44px; margin-bottom:6px;}
+.pp-sig-cap{font-size:11px; color:#555; margin-top:5px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
+.pp-approval-table{width:100%; border-collapse:collapse; margin-top:16px; font-size:11.5px;}
 .pp-approval-table td{border:1px solid #aaa; padding:9px 8px; vertical-align:top;}
 .pp-approval-table .role{font-weight:700; margin-bottom:16px; display:block;}
-.pp-sched-title{font-size:12px; font-weight:700; margin-bottom:8px;}
-.pp-sched-meta{font-size:10.5px; margin-bottom:8px; display:flex; gap:28px;}
-table.pp-sched-table{width:100%; border-collapse:collapse; font-size:9.7px;}
+.pp-sched-title{font-size:14px; font-weight:700; margin-bottom:10px;}
+.pp-sched-meta{font-size:12px; margin-bottom:10px; display:flex; gap:28px;}
+table.pp-sched-table{width:100%; border-collapse:collapse; font-size:11px;}
 table.pp-sched-table th, table.pp-sched-table td{border:1px solid #999; padding:5px 5px; text-align:right;}
 table.pp-sched-table th{background:#EEEEFA; color:#2E3192; font-weight:700;}
 table.pp-sched-table td:first-child, table.pp-sched-table th:first-child{text-align:left;}
-.pp-note{font-size:9.5px; color:#666; margin-top:10px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
+.pp-note{font-size:11px; color:#666; margin-top:12px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
 .pp-qr{text-align:center; margin:14px 0;}
 .pp-qr img{height:90px;}
 .pp-page-footer{position:absolute; bottom:18px; right:50px; font-size:9px; color:#999;}
+.pp-sched-footer{text-align:right; font-size:10px; color:#999; margin-top:8px;}
 </style>
 </head>
 <body>
@@ -1472,54 +1475,86 @@ function buildMoratoriumPages(data) {
 }
 
 function buildTdrPages(data, sched) {
-  const page1 = `<div class="print-page">
+  const page1Inner = `
     ${ppHeader(data,'แบบฟอร์มคำขอปรับปรุงโครงสร้างหนี้','ငွေသားချေးငွေ ကြွေးမြီပြန်လည်ဖွဲ့စည်းခြင်း တောင်းဆိုချက်')}
     ${ppBorrowerInfo(data)}
     ${ppTdrTerms(data, sched)}
     ${ppReasons(data)}
     ${ppCertification()}
     ${ppBorrowerSignature()}
-  </div>`;
+  `;
 
-  const pages = [page1];
   const rows = sched ? sched.rows : [];
-  const chunkSize = 32;
+  const chunkSize = 24;
   const chunks = [];
   for (let i=0;i<rows.length;i+=chunkSize) chunks.push(rows.slice(i,i+chunkSize));
   if (chunks.length===0) chunks.push([]);
 
-  chunks.forEach((chunk, idx) => {
+  const scheduleInners = chunks.map((chunk, idx) => {
     let rowsHtml = chunk.map(r => `<tr><td>${fmtDate(r.date)}</td><td>${fmtNum(r.installment)}</td><td>${fmtNum(r.feePaid)}</td><td>${fmtNum(r.interestPaid)}</td><td>${fmtNum(r.principalPaid)}</td><td>${fmtNum(r.remainingBalance)}</td></tr>`).join('');
-    let page = `<div class="print-page">
-      <div class="pp-sched-title">ตารางรายละเอียดการผ่อนชำระเงินกู้ <span style="font-family:'Noto Sans Myanmar',sans-serif; font-weight:500; font-size:11px; color:#666; line-height:1.7;">ချေးငွေအရစ်ကျပေးချေခြင်းဇယား</span></div>
+    return `
+      <div class="pp-sched-title">ตารางรายละเอียดการผ่อนชำระเงินกู้ <span style="font-family:'Noto Sans Myanmar',sans-serif; font-weight:500; font-size:12px; color:#666; line-height:1.7;">ချေးငွေအရစ်ကျပေးချေခြင်းဇယား</span></div>
       <div class="pp-sched-meta">
         <div><b>เลขที่สัญญา:</b> ${escapeHtml(data.loanContractNumber)}</div>
         <div><b>ชื่อ-ลูกค้า:</b> ${escapeHtml(data.borrowerTitle+' '+data.borrowerName)}</div>
       </div>
       <table class="pp-sched-table">
         <tr>
-          <th>Trans. Date<br><span style="font-weight:400;font-size:8.5px;">ရက်စွဲ</span></th>
-          <th>New Installment<br><span style="font-weight:400;font-size:8.5px;">အရစ်ကျအသစ်</span></th>
-          <th>Collection Fee<br><span style="font-weight:400;font-size:8.5px;">ကျသင့်ကြေး</span></th>
-          <th>Interest<br><span style="font-weight:400;font-size:8.5px;">အတိုး</span></th>
-          <th>Principal<br><span style="font-weight:400;font-size:8.5px;">ငွေရင်း</span></th>
-          <th>Remaining<br><span style="font-weight:400;font-size:8.5px;">ကျန်ငွေ</span></th>
+          <th>Trans. Date<br><span style="font-weight:400;font-size:9px;">ရက်စွဲ</span></th>
+          <th>New Installment<br><span style="font-weight:400;font-size:9px;">အရစ်ကျအသစ်</span></th>
+          <th>Collection Fee<br><span style="font-weight:400;font-size:9px;">ကျသင့်ကြေး</span></th>
+          <th>Interest<br><span style="font-weight:400;font-size:9px;">အတိုး</span></th>
+          <th>Principal<br><span style="font-weight:400;font-size:9px;">ငွေရင်း</span></th>
+          <th>Remaining<br><span style="font-weight:400;font-size:9px;">ကျန်ငွေ</span></th>
         </tr>
         ${rowsHtml}
       </table>
-      <div class="pp-page-footer">Schedule ${idx+1}/${chunks.length}</div>
-    </div>`;
-    pages.push(page);
+      ${chunks.length > 1 ? `<div class="pp-sched-footer">Schedule ${idx+1}/${chunks.length}</div>` : ''}
+    `;
   });
 
-  const finalPage = `<div class="print-page">
+  const trailingInner = `
     ${ppSingleClause(TDR_PAYMENT_CLAUSE)}
     ${ppQr()}
     ${ppSingleClause(TDR_DEFAULT_CLAUSE)}
     ${ppBorrowerSignature()}
     ${ppApprovalChain()}
-  </div>`;
-  pages.push(finalPage);
+  `;
+
+  return { page1Inner, scheduleInners, trailingInner };
+}
+
+/* Measures the rendered height (px) of a print-page's inner HTML by rendering it
+   offscreen at full width. Used to decide whether trailing content can be merged
+   onto the last schedule page instead of always starting a fresh page. */
+function measureInnerHeight(innerHtml) {
+  const probe = document.createElement('div');
+  probe.className = 'print-page';
+  probe.style.position = 'fixed';
+  probe.style.left = '-99999px';
+  probe.style.top = '0';
+  probe.style.minHeight = '0';
+  probe.innerHTML = innerHtml;
+  document.body.appendChild(probe);
+  const h = probe.scrollHeight;
+  document.body.removeChild(probe);
+  return h;
+}
+
+function assembleTdrPages(built) {
+  const PAGE_HEIGHT_LIMIT = 1123;
+  const pages = [`<div class="print-page">${built.page1Inner}</div>`];
+  const scheduleInners = built.scheduleInners.slice();
+  const lastIdx = scheduleInners.length - 1;
+  const mergedCandidate = scheduleInners[lastIdx] + built.trailingInner;
+
+  if (measureInnerHeight(mergedCandidate) <= PAGE_HEIGHT_LIMIT) {
+    scheduleInners[lastIdx] = mergedCandidate;
+  } else {
+    scheduleInners.push(built.trailingInner);
+  }
+
+  scheduleInners.forEach(inner => pages.push(`<div class="print-page">${inner}</div>`));
   return pages;
 }
 
@@ -1542,25 +1577,25 @@ async function generatePDF() {
     }
   }
 
-  const pages = currentType === 'moratorium' ? buildMoratoriumPages(data) : buildTdrPages(data, lastSchedule);
-
   const btn = $('generateBtn');
   btn.disabled = true;
   const origText = btn.textContent;
   btn.textContent = CURRENT_LANG==='th' ? 'กำลังสร้าง...' : 'Generating...';
-
   const printRoot = $('printRoot');
-  printRoot.innerHTML = pages.join('');
 
   try {
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
-    await new Promise(r => setTimeout(r, 250));
+    await new Promise(r => setTimeout(r, 200));
+
+    const pages = currentType === 'moratorium' ? buildMoratoriumPages(data) : assembleTdrPages(buildTdrPages(data, lastSchedule));
+    printRoot.innerHTML = pages.join('');
+    await new Promise(r => setTimeout(r, 200));
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ unit:'px', format:[794,1123], orientation:'portrait', compress:true });
     const pageEls = printRoot.querySelectorAll('.print-page');
     for (let i=0;i<pageEls.length;i++) {
-      const canvas = await html2canvas(pageEls[i], { scale:2, useCORS:true, backgroundColor:'#ffffff' });
+      const canvas = await html2canvas(pageEls[i], { scale:2, useCORS:true, backgroundColor:'#ffffff', foreignObjectRendering:true });
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
       if (i>0) pdf.addPage([794,1123],'portrait');
       pdf.addImage(imgData, 'JPEG', 0, 0, 794, 1123);
