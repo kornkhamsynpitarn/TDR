@@ -1595,7 +1595,7 @@ async function generatePDF() {
     const pdf = new jsPDF({ unit:'px', format:[794,1123], orientation:'portrait', compress:true });
     const pageEls = printRoot.querySelectorAll('.print-page');
     for (let i=0;i<pageEls.length;i++) {
-      const canvas = await html2canvas(pageEls[i], { scale:2, useCORS:true, backgroundColor:'#ffffff', foreignObjectRendering:true });
+      const canvas = await html2canvas(pageEls[i], { scale:2, useCORS:true, backgroundColor:'#ffffff' });
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
       if (i>0) pdf.addPage([794,1123],'portrait');
       pdf.addImage(imgData, 'JPEG', 0, 0, 794, 1123);
