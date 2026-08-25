@@ -200,6 +200,7 @@ table.sched tr:last-child td{font-weight:700; background:#FAFAFD;}
 .pp-title-mm{font-size:13px; color:#444; font-family:'Noto Sans Myanmar',sans-serif; margin-top:3px; line-height:1.7;}
 .pp-header-right{margin-left:auto; text-align:right; font-size:12.5px;}
 .pp-header-right .cat{margin-top:4px; font-weight:600; color:#2E3192;}
+.pp-header-right .case-cat{margin-top:2px; font-weight:500; color:#666; font-size:11px;}
 .pp-field-row{display:flex; gap:20px; margin-bottom:7px;}
 .pp-field{flex:1; min-width:0;}
 .pp-field-2{flex:2;}
@@ -895,6 +896,7 @@ function fmtMoney(s){
 function ppHeader(data, titleTh, titleMm) {
   const lh = BRANCH_LETTERHEAD[data.branchValue] || {name:'', address:''};
   const branchLabel = (BRANCHES.find(b => b.value === data.branchValue) || {}).en || '';
+  const caseLabel = data.caseCategory === 'talktous' ? 'Talk To Us' : 'Normal';
   return `
   <div class="pp-letterhead">
     <img src="${LOGO_DATAURI}" width="46" height="46">
@@ -910,6 +912,7 @@ function ppHeader(data, titleTh, titleMm) {
     </div>
     <div class="pp-header-right">
       <div class="cat">${escapeHtml(branchLabel)}</div>
+      <div class="case-cat">${escapeHtml(caseLabel)}</div>
     </div>
   </div>`;
 }
