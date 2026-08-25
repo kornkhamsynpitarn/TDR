@@ -217,7 +217,7 @@ table.sched tr:last-child td{font-weight:700; background:#FAFAFD;}
 .pp-clause .mm{color:#444; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7; margin-top:2px;}
 .pp-sig-wrap{margin-top:26px; font-size:12.5px; display:flex; justify-content:space-between;}
 .pp-sig-block{width:46%;}
-.pp-sig-line{border-bottom:1px solid #333; display:block; height:44px; margin-bottom:6px;}
+.pp-sig-gap{height:44px; margin-bottom:6px;}
 .pp-sig-cap{font-size:11px; color:#555; margin-top:5px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
 .pp-approval-table{width:100%; border-collapse:collapse; margin-top:16px; font-size:11.5px;}
 .pp-approval-table td{border:1px solid #aaa; padding:9px 8px; vertical-align:top;}
@@ -230,7 +230,7 @@ table.pp-sched-table th{background:#EEEEFA; color:#2E3192; font-weight:700;}
 table.pp-sched-table td:first-child, table.pp-sched-table th:first-child{text-align:left;}
 .pp-note{font-size:11px; color:#666; margin-top:12px; font-family:'Noto Sans Myanmar',sans-serif; line-height:1.7;}
 .pp-qr{text-align:center; margin:14px 0;}
-.pp-qr img{height:90px;}
+.pp-qr img{height:150px;}
 .pp-page-footer{position:absolute; bottom:18px; right:50px; font-size:9px; color:#999;}
 .pp-sched-footer{text-align:right; font-size:10px; color:#999; margin-top:8px;}
 </style>
@@ -410,7 +410,7 @@ table.pp-sched-table td:first-child, table.pp-sched-table th:first-child{text-al
       <div class="field">
         <label data-i18n="fFrequency">Payment frequency</label>
         <select id="frequency">
-          <option value="bimonthly" data-i18n="freqBimonthly">Bi-monthly (15th &amp; 30th)</option>
+          <option value="bimonthly" data-i18n="freqBimonthly">Bi-weekly (15th &amp; 30th)</option>
           <option value="monthly" data-i18n="freqMonthly">Monthly (30th)</option>
         </select>
       </div>
@@ -558,7 +558,7 @@ en: {
   fOverdueInstallments:"Overdue installments (count)", fResumeDate:"Resume payment date",
   secTdrTerms:"TDR Calculation Inputs", secTdrTermsDesc:"Drives the new installment amount & repayment schedule",
   fTdrDate:"TDR agreement date", fFirstInstallmentDate:"First installment date", fFrequency:"Payment frequency",
-  freqBimonthly:"Bi-monthly (15th & 30th)", freqMonthly:"Monthly (30th)",
+  freqBimonthly:"Bi-weekly (15th & 30th)", freqMonthly:"Monthly (30th)",
   fOutstandingPrincipal:"Outstanding principal (THB)", fOutstandingInterest:"Outstanding interest (THB)",
   fOutstandingFee:"Outstanding collection fee (THB)", fAnnualRate:"Annual interest rate (%)",
   fTermMonths:"Term (months)",
@@ -640,7 +640,7 @@ mm: {
   fOverdueInstallments:"သွင်းရက်လွန်အရစ်ကျအရေအတွက်", fResumeDate:"ကြွေးမြီဆိုင်းငံ့ခြင်းသက်တမ်းကုန်ပြီး ငွေစသွင်းရမည့်ရက်",
   secTdrTerms:"TDR တွက်ချက်ရန် အချက်အလက်", secTdrTermsDesc:"အရစ်ကျပမာဏအသစ်နှင့် ပေးချေမှုဇယားကို တွက်ချက်ရန်",
   fTdrDate:"ကြွေးမြီပြန်လည်ဖွဲ့စည်းသည့် ရက်စွဲ", fFirstInstallmentDate:"ပထမဆုံးအရစ်ကျ ပေးချေရမည့်ရက်", fFrequency:"ပေးချေမှုကြိမ်နှုန်း",
-  freqBimonthly:"တစ်လနှစ်ကြိမ် (၁၅ / ၃၀)", freqMonthly:"လစဉ် (၃၀ ရက်နေ့တိုင်း)",
+  freqBimonthly:"နှစ်ပတ်တစ်ကြိမ် (၁၅ / ၃၀)", freqMonthly:"လစဉ် (၃၀ ရက်နေ့တိုင်း)",
   fOutstandingPrincipal:"ကျန်ရှိငွေရင်း (ဘတ်)", fOutstandingInterest:"ကျန်ရှိအတိုး (ဘတ်)",
   fOutstandingFee:"ကျန်ရှိနောက်ကျကြေး (ဘတ်)", fAnnualRate:"နှစ်စဉ်အတိုးနှုန်း (%)",
   fTermMonths:"ကာလ (လ)",
@@ -747,6 +747,12 @@ function excelPMT(rate, nper, pv) {
 function daysBetween(d1, d2) { return Math.round((d2 - d1) / 86400000); }
 function roundToHundred(x) { return Math.round(x / 100) * 100; }
 function addDaysUTCDate(y,m,d){ return new Date(Date.UTC(y,m,d)); }
+function daysInMonth(y,m){ return new Date(Date.UTC(y, m+1, 0)).getUTCDate(); }
+function monthEndOrThirtieth(y,m){
+  // "30th of the month" for every month, except when the month has fewer
+  // than 30 days (only February) — then use its actual last day (28th/29th).
+  return addDaysUTCDate(y, m, Math.min(30, daysInMonth(y, m)));
+}
 
 function computeTDRSchedule({fee0, interest0, principal0, annualRatePct, termMonths, frequency, tdrDate, firstInstallmentDate}) {
   const annualRate = annualRatePct / 100;
@@ -805,9 +811,10 @@ function computeTDRSchedule({fee0, interest0, principal0, annualRatePct, termMon
 
     const d = dueDate;
     if (frequency === 'monthly') {
-      dueDate = addDaysUTCDate(d.getUTCFullYear(), d.getUTCMonth()+1, 30);
+      dueDate = monthEndOrThirtieth(d.getUTCFullYear(), d.getUTCMonth()+1);
     } else {
-      if (d.getUTCDate() < 30) dueDate = addDaysUTCDate(d.getUTCFullYear(), d.getUTCMonth(), 30);
+      const currentMonthEndDay = Math.min(30, daysInMonth(d.getUTCFullYear(), d.getUTCMonth()));
+      if (d.getUTCDate() < currentMonthEndDay) dueDate = monthEndOrThirtieth(d.getUTCFullYear(), d.getUTCMonth());
       else dueDate = addDaysUTCDate(d.getUTCFullYear(), d.getUTCMonth()+1, 15);
     }
   }
@@ -1040,12 +1047,12 @@ function ppCertification() {
 function ppBorrowerSignature() {
   return `<div class="pp-sig-wrap">
     <div class="pp-sig-block">
-      <span class="pp-sig-line"></span>
+      <div class="pp-sig-gap"></div>
       <div>ลงชื่อผู้กู้ (........................)</div>
       <div class="pp-sig-cap">ချေးငွေယူသူလက်မှတ်</div>
     </div>
     <div class="pp-sig-block">
-      <span class="pp-sig-line"></span>
+      <div class="pp-sig-gap"></div>
       <div>วันที่ ........................</div>
       <div class="pp-sig-cap">ရက်စွဲ</div>
     </div>
@@ -1067,7 +1074,7 @@ function ppQr() {
   if (uploadedQrDataUri) {
     return `<div class="pp-qr"><img src="${uploadedQrDataUri}"></div>`;
   }
-  return `<div class="pp-qr"><div style="display:inline-block; width:140px; height:140px; border:2px dashed #bbb; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; color:#999; text-align:center; padding:10px;">QR code not uploaded<br>ကျသင့်ငွေ QR ကုဒ် မတင်ရသေးပါ</div></div>`;
+  return `<div class="pp-qr"><div style="display:inline-block; width:180px; height:180px; border:2px dashed #bbb; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999; text-align:center; padding:10px;">QR code not uploaded<br>ကျသင့်ငွေ QR ကုဒ် မတင်ရသေးပါ</div></div>`;
 }
 
 const MORATORIUM_CLAUSES = [
