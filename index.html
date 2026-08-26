@@ -85,23 +85,26 @@ button{font-family:inherit;}
 
 /* Step indicator */
 .step-indicator{
-  display:flex; align-items:center; gap:0; margin:18px 0 4px; overflow-x:auto;
+  display:flex; align-items:stretch; gap:8px; margin:18px 0 4px; overflow-x:auto;
 }
 .step-pill{
-  display:flex; align-items:center; gap:8px; cursor:pointer; padding:8px 4px;
-  border:none; background:transparent; flex:none;
+  display:flex; align-items:center; gap:8px; cursor:pointer; padding:10px 14px;
+  border:1.5px solid var(--border); background:var(--card); border-radius:var(--radius);
+  flex:1; min-width:150px; transition:.15s;
 }
+.step-pill:hover{border-color:var(--navy);}
 .step-pill .sp-num{
-  width:24px; height:24px; border-radius:50%; background:var(--border); color:var(--muted);
-  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+  width:22px; height:22px; border-radius:50%; background:var(--border); color:var(--muted);
+  display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700;
   transition:.15s; flex:none;
 }
 .step-pill .sp-label{font-size:12.5px; font-weight:600; color:var(--muted); white-space:nowrap; transition:.15s;}
+.step-pill.active{border-color:var(--navy); background:var(--navy-tint);}
 .step-pill.active .sp-num{background:var(--navy); color:#fff;}
 .step-pill.active .sp-label{color:var(--navy);}
 .step-pill.done .sp-num{background:var(--navy-tint); color:var(--navy);}
 .step-pill.done .sp-label{color:var(--text);}
-.step-connector{width:20px; height:1.5px; background:var(--border); flex:none; margin:0 4px;}
+@media(max-width:640px){.step-pill .sp-label{white-space:normal;} .step-pill{min-width:0;}}
 
 /* Cards */
 .card{
@@ -208,6 +211,8 @@ table.sched tr:last-child td{font-weight:700; background:#FAFAFD;}
 .pp-label-mm{font-size:11px; color:#555; font-family:'Noto Sans Myanmar',sans-serif; margin-bottom:3px; line-height:1.7;}
 .pp-value{border-bottom:1px dotted #999; min-height:18px; padding:3px 3px; font-weight:600; font-size:14px; overflow-wrap:anywhere; word-break:normal;}
 .pp-section-title{font-size:14px; font-weight:700; color:#2E3192; margin:16px 0 8px; border-bottom:1px solid #d6d6e6; padding-bottom:4px;}
+.pp-box{border:1.3px solid #d6d6e6; border-radius:8px; padding:12px 16px 14px; margin:14px 0;}
+.pp-box .pp-section-title{margin-top:0;}
 .pp-section-title .mm{font-size:12px; color:#666; font-weight:500; font-family:'Noto Sans Myanmar',sans-serif; display:block; line-height:1.7; padding-top:2px;}
 .pp-reason-row{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12px; margin-bottom:4px; line-height:1.7;}
 .pp-reason-item{display:flex; align-items:center; gap:4px; white-space:nowrap; line-height:1.7;}
@@ -927,7 +932,7 @@ function fieldPair(labelTh, labelMm, value) {
 
 function ppBorrowerInfo(data) {
   const idLabel = data.idType === 'ID' ? 'ID' : 'Passport';
-  let html = `<div class="pp-section-title">ข้อมูลผู้กู้ <span class="mm">ချေးငွေယူသူအချက်အလက်</span></div>`;
+  let html = `<div class="pp-box"><div class="pp-section-title">ข้อมูลผู้กู้ <span class="mm">ချေးငွေယူသူအချက်အလက်</span></div>`;
   html += `<div class="pp-field-row">
     ${fieldPair('ชื่อ - นามสกุล ผู้กู้', 'ချေးငွေယူသူ အမည်', data.borrowerTitle + ' ' + data.borrowerName)}
     ${fieldPair('ID / Passport ('+idLabel+')', 'ပတ်စပို့ နံပါတ်', data.idNumber)}
@@ -952,11 +957,12 @@ function ppBorrowerInfo(data) {
       ${fieldPair('หรือกรณีเปลี่ยนชื่อนาม-สกุล','အမည်ပြောင်းလဲခြင်းရှိလျှင်', data.newTitle + ' ' + data.newName)}
     </div>`;
   }
+  html += `</div>`;
   return html;
 }
 
 function ppMoratoriumTerms(data) {
-  let html = `<div class="pp-section-title">เงื่อนไขการพักชำระหนี้ <span class="mm">ကြွေးမြီဆိုင်းငံ့ခြင်းသတ်မှတ်ချက်</span></div>`;
+  let html = `<div class="pp-box"><div class="pp-section-title">เงื่อนไขการพักชำระหนี้ <span class="mm">ကြွေးမြီဆိုင်းငံ့ခြင်းသတ်မှတ်ချက်</span></div>`;
   html += `<div class="pp-field-row">
     ${fieldPair('ขอพักชำระหนี้ 1 เดือน นับตั้งแต่วันที่ทำสัญญา (ว/ด/ป)','ကြွေးမြီအတွက် ၁ လ ဆိုင်းငံ့ပေးရန် တောင်းဆိုသည့်ရက်စွဲ', fmtDateStr(data.morRequestDate))}
     ${fieldPair('วงเงินกู้คงเหลือ (เงินต้น+ดอกเบี้ย+ค่าทวงถาม) บาท','ကြွေးကျန်ငွေပမာဏ (ငွေရင်း + အတိုး + နောက်ကျကြေး)', fmtMoney(data.morOutstandingBalance))}
@@ -968,11 +974,12 @@ function ppMoratoriumTerms(data) {
   html += `<div class="pp-field-row">
     ${fieldPair('วันครบชำระกำหนดหลังการพักชำระหนี้ (ว/ด/ป)','ကြွေးမြီဆိုင်းငံ့ခြင်းသက်တမ်းကုန်ပြီး ငွေစသွင်းရမည့်ရက်', fmtDateStr(data.morResumeDate))}
   </div>`;
+  html += `</div>`;
   return html;
 }
 
 function ppTdrTerms(data, sched) {
-  let html = `<div class="pp-section-title">เงื่อนไขการผ่อนชำระ <span class="mm">အရစ်ကျပေးချေမှုသတ်မှတ်ချက်</span></div>`;
+  let html = `<div class="pp-box"><div class="pp-section-title">เงื่อนไขการผ่อนชำระ <span class="mm">အရစ်ကျပေးချေမှုသတ်မှတ်ချက်</span></div>`;
   html += `<div class="pp-field-row">
     ${fieldPair('ขอปรับอัตราผ่อนชำระ ณ วันที่ทำสัญญาปรับโครงสร้างหนี้ (ว/ด/ป)','ကြွေးမြီပြန်လည်ဖွဲ့စည်းခြင်း တောင်းဆိုသည့် ရက်စွဲ', fmtDateStr(data.tdrDate))}
     ${fieldPair('วงเงินกู้คงเหลือ (เงินต้น+ดอกเบี้ย+ค่าทวงถาม) บาท','ကြွေးကျန်ငွေပမာဏ (ငွေရင်း + အတိုး + နောက်ကျကြေး)', fmtMoney(sched ? sched.pv : ''))}
@@ -986,6 +993,7 @@ function ppTdrTerms(data, sched) {
   html += `<div class="pp-section-title" style="margin-top:14px;">รายการชำระตามเงื่อนไขปรับปรุงโครงสร้างหนี้ <span class="mm">ကြွေးမြီပြန်လည်ဖွဲ့စည်းခြင်းသတ်မှတ်ချက်အရ ငွေသွင်းရန် အစီအစဉ်</span></div>`;
   html += ppTdrTierBlock('A', tier==='A', data);
   html += ppTdrTierBlock('B', tier==='B', data);
+  html += `</div>`;
   return html;
 }
 
@@ -1020,7 +1028,7 @@ function ppTdrTierBlock(letter, isActive, data) {
 </script>
 <script>
 function ppReasons(data) {
-  let html = `<div class="pp-section-title">สาเหตุในการขอทำเรื่อง <span class="mm">တောင်းဆိုရသည့်အကြောင်းရင်း</span></div>`;
+  let html = `<div class="pp-box"><div class="pp-section-title">สาเหตุในการขอทำเรื่อง <span class="mm">တောင်းဆိုရသည့်အကြောင်းရင်း</span></div>`;
   REASONS.forEach(r => {
     if (r.subs.length === 0) {
       const on = data.selectedReasons.includes(r.id);
@@ -1037,6 +1045,7 @@ function ppReasons(data) {
       html += `</div>`;
     }
   });
+  html += `</div>`;
   return html;
 }
 
@@ -1074,10 +1083,13 @@ function ppApprovalChain() {
 }
 
 function ppQr() {
-  if (uploadedQrDataUri) {
-    return `<div class="pp-qr"><img src="${uploadedQrDataUri}"></div>`;
-  }
-  return `<div class="pp-qr"><div style="display:inline-block; width:180px; height:180px; border:2px dashed #bbb; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999; text-align:center; padding:10px;">QR code not uploaded<br>ကျသင့်ငွေ QR ကုဒ် မတင်ရသေးပါ</div></div>`;
+  const inner = uploadedQrDataUri
+    ? `<img src="${uploadedQrDataUri}">`
+    : `<div style="display:inline-block; width:180px; height:180px; border:2px dashed #bbb; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#999; text-align:center; padding:10px;">QR code not uploaded<br>ကျသင့်ငွေ QR ကုဒ် မတင်ရသေးပါ</div>`;
+  return `<div class="pp-box">
+    <div class="pp-section-title">ชำระเงินผ่าน QR Code <span class="mm">QR ကုဒ်မှတစ်ဆင့် ငွေပေးချေခြင်း</span></div>
+    <div class="pp-qr">${inner}</div>
+  </div>`;
 }
 
 const MORATORIUM_CLAUSES = [
@@ -1240,7 +1252,6 @@ function renderWizard() {
   for (let i = 1; i <= TOTAL_STEPS; i++) {
     const cls = i === currentStep ? 'active' : (i < currentStep ? 'done' : '');
     html += `<button type="button" class="step-pill ${cls}" data-goto="${i}"><span class="sp-num">${i}</span><span class="sp-label">${escapeHtml(stepLabel(i))}</span></button>`;
-    if (i < TOTAL_STEPS) html += '<div class="step-connector"></div>';
   }
   wrap.innerHTML = html;
   wrap.querySelectorAll('.step-pill').forEach(pill => {
@@ -1308,6 +1319,13 @@ $('position').addEventListener('change', e => {
 });
 
 $('logoImg').src = LOGO_DATAURI;
+
+/* Browser tab favicon */
+const favicon = document.createElement('link');
+favicon.rel = 'icon';
+favicon.type = 'image/png';
+favicon.href = LOGO_DATAURI;
+document.head.appendChild(favicon);
 
 /* ================= QR upload ================= */
 let uploadedQrDataUri = null;
