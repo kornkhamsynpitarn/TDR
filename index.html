@@ -793,10 +793,8 @@ function computeTDRSchedule({fee0, interest0, principal0, annualRatePct, termMon
       interestPaid = Math.min(interestOwed, remaining);
       principalPaid = Math.max(remaining - interestPaid, 0);
       interest = Math.max(interestOwed - interestPaid, 0);
-      if (principalPaid > 0) {
-        if (principalPaid >= principal - 0.005) principalPaid = principal; // exact payoff
-        anchorForCatchup = dueDate;
-      }
+      if (principalPaid > 0 && principalPaid >= principal - 0.005) principalPaid = principal; // exact payoff
+      anchorForCatchup = dueDate; // always advance once this period's accrual has been accounted for
     }
 
     fee = fee - feePaid;
